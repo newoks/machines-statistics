@@ -3,8 +3,6 @@ import sqlite3
 con = sqlite3.connect('example.db')
 cur = con.cursor()
 
-# workbook = xlsxwriter.Workbook(f'Statistics.xlsx')
-
 
 def create_worksheet(workbook, worksheet_name, last_4_db):
     worksheet = workbook.add_worksheet(worksheet_name)
@@ -16,6 +14,13 @@ def create_worksheet(workbook, worksheet_name, last_4_db):
 
     data_table = [list(row) for row in last_4_db]
     header = ['Average HS', 'Online', 'Difference', 'Notes']
+    time_min = [':15', ':30', ':45', ':00']
+
+    for row in data_table:
+        row[0] = row[0][0:2]
+
+    for i in range(4):
+        data_table[i][0] = data_table[i][0] + time_min[i]
 
     worksheet.write_row(0, 1, header, header_format)
 
@@ -31,6 +36,3 @@ def create_worksheet(workbook, worksheet_name, last_4_db):
 
     worksheet.set_column('A:A', 15, time_column_format)
     worksheet.set_column('B:E', 15, fontsize_format)
-
-
-# workbook.close()
