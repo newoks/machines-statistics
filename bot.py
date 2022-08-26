@@ -8,7 +8,7 @@ from xlsx_create import create_worksheet
 
 con = sqlite3.connect('example.db')
 cur = con.cursor()
-sql_select_last_4 = '''SELECT * FROM hashrate WHERE id > (SELECT MAX(id) FROM hashrate) - 4'''
+sql_select_last_4 = '''SELECT hs_avg, online_machines, difference, time_ FROM hashrate WHERE id > (SELECT MAX(id) FROM hashrate) - 4'''
 
 
 def send_all_statistics():
