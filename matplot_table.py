@@ -6,23 +6,24 @@ from source_data import tz_irk
 def create_table(last_4_db):
     rows = []
     data_table = []
-    total_row = [0, 0, 0]
+    total_row = [0, 0, 0, 0]
     time_min = [':15', ':30', ':45', ':00']
 
     for row in last_4_db:
-        time_hours = row[3][0:2]
+        time_hours = row[4][0:2]
         rows.append(time_hours)
         row = list(row)
-        row.pop(3)
+        row.pop(4)
         total_row[0] += row[0]/4
         total_row[1] += row[1]/4
         total_row[2] += row[2]/4
+        total_row[3] += row[3] / 4
         data_table.append(row)
 
     total_row[0] = ('{:.2f}'.format(total_row[0]))
     data_table.append(total_row)
     data = data_table
-    val1 = ['Average HS', 'Online', 'Difference']
+    val1 = ['Average PTH', 'Online', 'Offline', 'Total']
 
     for i in range(len(rows)):
         rows[i] = rows[i]+time_min[i]
@@ -38,7 +39,7 @@ def create_table(last_4_db):
         colColours=["palegreen"] * 10,
         cellLoc='center',
         loc='center left',
-        colWidths=[0.33, 0.33, 0.33])
+        colWidths=[0.3, 0.23, 0.23, 0.23])
 
     date_ = datetime.now(tz_irk).strftime("%d.%m.%Y")
     time_second = datetime.now(tz_irk).strftime("%H")

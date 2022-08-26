@@ -26,7 +26,7 @@ def data_antpool(url_hs: str, url_machines: str, access_key, user_id):
     hs_now = float(response_hs['data']['hsNow'])
     count_online = int(response_machines['data']['workerStatus']['onlineWorkerNum'])
     count_total = int(response_machines['data']['workerStatus']['totalWorkerNum'])
-    return [count_online, hs_now, count_total]
+    return [count_online, hs_now]
 
 
 def avg_hs(all_hs):
@@ -38,11 +38,12 @@ def data_f2pool(url: str, access_key):
     count_online = response['originData']['tagsOverview'][0]['online']
     count_total = response['originData']['tagsOverview'][0]['total']
     hs_now = ('{:.2f}'.format(float(response['originData']['summary']['hash_rate']) / 1000000000000000))
-    return [count_online, hs_now, count_total]
+    return [count_online, hs_now]
 
 
 def data_binance(url: str, access_key):
     response = raw_request(url.format(access_key=access_key))
     hs_now = response['data']['hashRate']
     count_online = response['data']['validNum']
+    count_total = int(response['data']['validNum']) + int(response['data']['invalidNum'])
     return [count_online, hs_now]
